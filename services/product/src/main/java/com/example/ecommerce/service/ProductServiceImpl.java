@@ -1,7 +1,7 @@
 package com.example.ecommerce.service;
 
 import com.example.ecommerce.domain.enitites.Product;
-import com.example.ecommerce.domain.exceptions.ProductPurchaseException;
+import com.example.ecommerce.domain.exceptions.ProductPurchaseFailedException;
 import com.example.ecommerce.domain.repository.IProductRepository;
 import com.example.ecommerce.domain.request.CreateProductRequest;
 import com.example.ecommerce.domain.request.ProductPurchaseRequest;
@@ -41,7 +41,7 @@ public class ProductServiceImpl implements IProductService {
         List<Product> storedProducts = repository.findAllByIdInOrderById(productIds);
 
         if(productIds.size() != storedProducts.size()) {
-            throw new ProductPurchaseException("One or more products does not exist");
+            throw new ProductPurchaseFailedException("One or more products does not exist");
         }
 
         List<ProductPurchaseRequest> storesRequest = request
@@ -56,7 +56,7 @@ public class ProductServiceImpl implements IProductService {
             ProductPurchaseRequest productRequest = storesRequest.get(i);
 
             if(productDb.getAvailableQuantity() < productRequest.quantity()) {
-                throw new ProductPurchaseException(
+                throw new ProductPurchaseFailedException(
                         String.format("Insufficient stock quantity for product with id: %s", productDb.getId())
                 );
             } else {
