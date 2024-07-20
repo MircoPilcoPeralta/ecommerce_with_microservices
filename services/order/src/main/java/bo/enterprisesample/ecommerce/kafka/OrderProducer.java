@@ -12,10 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class OrderProducer {
+public class OrderProducer implements IOrderProducer{
 
     private final KafkaTemplate<String, OrderConfirmation> kafkaTemplate;
 
+    @Override
     public void sendOrderConfirmation(OrderConfirmation orderConfirmation) {
         log.info("Sending order confirmation");
 
