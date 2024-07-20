@@ -7,9 +7,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public record OrderResponse(
-        String customerId,
-        PaymentMethod paymentMethod,
+        Integer id,
         String reference,
-        BigDecimal totalAmount
+        BigDecimal totalAmount,
+        PaymentMethod paymentMethod,
+        String customerId
 ) {
 }

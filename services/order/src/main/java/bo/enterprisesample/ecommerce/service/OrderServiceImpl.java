@@ -88,5 +88,24 @@ public class OrderServiceImpl implements IOrderService {
                 orderSaved.getReference(),
                 orderSaved.getTotalAmount()
         );
+    @Override
+    public List<OrderResponse> findAll() {
+        return repository
+                .findAll()
+                .stream()
+                .map(orderMapper::toOrderResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public OrderResponse findById(Integer id) {
+        return orderMapper.
+                toOrderResponse(
+                        repository
+                                .findById(id)
+                                .orElseThrow(
+                                        ()-> new EntityNotFoundException(String.format("the order with id: %d does not exist", id))
+                                )
+                );
     }
 }

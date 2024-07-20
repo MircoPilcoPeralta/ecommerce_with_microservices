@@ -5,15 +5,15 @@ import bo.enterprisesample.ecommerce.domain.entity.OrderLine;
 import bo.enterprisesample.ecommerce.domain.request.CreateOrderRequest;
 import bo.enterprisesample.ecommerce.domain.request.OrderLineRequest;
 import bo.enterprisesample.ecommerce.domain.request.PurchaseRequest;
+import bo.enterprisesample.ecommerce.domain.response.OrderLineResponse;
 import bo.enterprisesample.ecommerce.domain.response.OrderResponse;
-import bo.enterprisesample.ecommerce.domain.response.PurchaseResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class OrderMapperService implements IOrderMapper {
+public class OrderMapperImpl implements IOrderMapper {
     @Override
     public Order toOrder(CreateOrderRequest request) {
         return Order
@@ -35,7 +35,13 @@ public class OrderMapperService implements IOrderMapper {
 
     @Override
     public OrderResponse toOrderResponse(Order order) {
-        return null;
+        return new OrderResponse(
+                order.getId(),
+                order.getReference(),
+                order.getTotalAmount(),
+                order.getPaymentMethod(),
+                order.getCustomerId()
+        );
     }
 
     @Override
@@ -47,6 +53,14 @@ public class OrderMapperService implements IOrderMapper {
                 .productId(request.productId())
                 .quantity(request.quantity())
                 .build();
+    }
+
+    @Override
+    public OrderLineResponse toOrderLineReponse(OrderLine orderLine) {
+        return new OrderLineResponse(
+                orderLine.getId(),
+                orderLine.getQuantity()
+        );
     }
 
     private List<OrderLine> toOrderLines(List<PurchaseRequest> purchaseRequests) {
