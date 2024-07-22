@@ -17,4 +17,4 @@ spring:
       properties:
         spring.json.type.mapping: paymentConfirmation:bo.enterprisesample.ecommerce.domain.record.PaymentNotificationRequest
 server:
-  port: 8070
+  port: 8060
