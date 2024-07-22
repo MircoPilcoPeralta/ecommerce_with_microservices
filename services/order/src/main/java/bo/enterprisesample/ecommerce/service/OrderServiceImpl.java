@@ -2,21 +2,26 @@ package bo.enterprisesample.ecommerce.service;
 
 import bo.enterprisesample.ecommerce.domain.entity.Order;
 import bo.enterprisesample.ecommerce.domain.entity.OrderLine;
+import bo.enterprisesample.ecommerce.domain.entity.PaymentMethod;
 import bo.enterprisesample.ecommerce.domain.exception.BusinessException;
 import bo.enterprisesample.ecommerce.domain.record.OrderConfirmation;
 import bo.enterprisesample.ecommerce.domain.repository.IOrderRepository;
 import bo.enterprisesample.ecommerce.domain.request.CreateOrderRequest;
+import bo.enterprisesample.ecommerce.domain.request.CreatePaymentRequest;
 import bo.enterprisesample.ecommerce.domain.request.OrderLineRequest;
 import bo.enterprisesample.ecommerce.domain.response.CustomerResponse;
 import bo.enterprisesample.ecommerce.domain.response.OrderResponse;
+import bo.enterprisesample.ecommerce.domain.response.PaymentResponse;
 import bo.enterprisesample.ecommerce.domain.response.PurchaseResponse;
 import bo.enterprisesample.ecommerce.kafka.IOrderProducer;
 import bo.enterprisesample.ecommerce.service.customer.ICustomerClient;
+import bo.enterprisesample.ecommerce.service.payment.PaymentClient;
 import bo.enterprisesample.ecommerce.service.product.IProductClient;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +37,7 @@ public class OrderServiceImpl implements IOrderService {
     private final IOrderMapper orderMapper;
     private final IOrderLineService orderLineService;
     private final IOrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     @Override
     public OrderResponse createOrder(CreateOrderRequest request) {
@@ -66,8 +72,20 @@ public class OrderServiceImpl implements IOrderService {
         }
 
         // payment process
+        CreatePaymentRequest paymentRequest = new CreatePaymentRequest(
+                request.totalAmount(),
+                request.paymentMethod(),
+                request.id(),
+                request.reference(),
+                new CustomerResponse(
+                        customer.id(),
+                        customer.firstName(),
+                        customer.lastName(),
+                        customer.email()
+                )
+        );
 
-
+         paymentClient.createPayment(paymentRequest);
 
         // Send a message to kafka broker (Notification-ms)
         orderProducer.sendOrderConfirmation(
