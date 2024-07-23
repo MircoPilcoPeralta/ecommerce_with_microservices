@@ -85,6 +85,6 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<ProductResponse> findAll() {
-        return List.of();
+        return repository.findAll().stream().map(mapper::toProductResponse).toList();
     }
 }
