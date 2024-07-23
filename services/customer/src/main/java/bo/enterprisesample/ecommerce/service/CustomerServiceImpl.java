@@ -68,10 +68,10 @@ public class CustomerServiceImpl implements ICustomerService {
 
     private void mergeCustomer(Customer customer, EditCustomerRequest request) {
         if(StringUtils.isNotBlank(request.firstName())) {
-            customer.setFirstName(request.firstName());
+            customer.setFirstname(request.firstName());
         }
         if(StringUtils.isNotBlank(request.firstName())) {
-            customer.setLastName(request.firstName());
+            customer.setLastname(request.firstName());
         }
         if(StringUtils.isNotBlank(request.email())) {
             customer.setEmail(request.email());

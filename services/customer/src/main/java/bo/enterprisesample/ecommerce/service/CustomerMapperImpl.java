@@ -13,8 +13,8 @@ public class CustomerMapperImpl implements ICustomerMapper {
         return Customer
                 .builder()
                 .id(request.id())
-                .firstName(request.firstName())
-                .lastName(request.lastName())
+                .firstname(request.firstname())
+                .lastname(request.lastname())
                 .email(request.email())
                 .address(request.address())
                 .build();
@@ -23,6 +23,11 @@ public class CustomerMapperImpl implements ICustomerMapper {
     @Override
     public CustomerResponse toCustomerResponse(Customer customer) {
         if(customer == null) return null;
-        return new CustomerResponse(customer.getId(), customer.getFirstName(), customer.getLastName(), customer.getEmail(), customer.getAddress());
+        return new CustomerResponse(
+                customer.getId(),
+                customer.getFirstname(),
+                customer.getLastname(),
+                customer.getEmail(),
+                customer.getAddress());
     }
 }
