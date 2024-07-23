@@ -68,6 +68,7 @@ public class EmailServiceImpl implements IEmailService {
             messageHelper.setText(processedHtml, true);
             messageHelper.setTo(destinationEmail);
             log.info(String.format("INFO - Email successfully sent to %s with template: %s", destinationEmail, htmlTemplateName));
+            log.info(processedHtml);
         }
         catch (MessagingException e ) {
             log.warn("WARNING - Email could not be sent to " + destinationEmail);
@@ -118,6 +119,7 @@ public class EmailServiceImpl implements IEmailService {
             messageHelper.setText(processedHtml, true);
             messageHelper.setTo(destinationEmail);
             log.info(String.format("INFO - Email successfully sent to %s with template: %s", destinationEmail, htmlTemplateName));
+            log.info(processedHtml);
         }
         catch (MessagingException e ) {
             log.warn("WARNING - Email could not be sent to " + destinationEmail);
