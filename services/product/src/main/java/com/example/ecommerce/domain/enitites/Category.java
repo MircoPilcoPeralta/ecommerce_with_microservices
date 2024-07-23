@@ -1,5 +1,6 @@
 package com.example.ecommerce.domain.enitites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,5 +20,6 @@ public class Category {
     private String name;
     private String description;
     @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<Product> products;
 }
