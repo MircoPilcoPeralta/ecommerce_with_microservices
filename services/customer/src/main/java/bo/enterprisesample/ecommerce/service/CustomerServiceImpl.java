@@ -25,9 +25,9 @@ public class CustomerServiceImpl implements ICustomerService {
         this.mapper = mapper;
     }
 
-    public String createCustomer(CreateCustomerRequest request) {
+    public CustomerResponse createCustomer(CreateCustomerRequest request) {
         Customer customer = repository.save(mapper.toCustomer(request));
-        return customer.toString();
+        return mapper.toCustomerResponse(customer);
     }
 
     @Override

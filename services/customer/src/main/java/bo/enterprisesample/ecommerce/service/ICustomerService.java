@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ICustomerService {
-    String createCustomer(CreateCustomerRequest request);
+    CustomerResponse createCustomer(CreateCustomerRequest request);
 
     void updateCustomer(EditCustomerRequest request);
 
