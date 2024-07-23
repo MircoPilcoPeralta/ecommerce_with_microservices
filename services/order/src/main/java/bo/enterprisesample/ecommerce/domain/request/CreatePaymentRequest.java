@@ -10,6 +10,6 @@ public record CreatePaymentRequest(
         PaymentMethod paymentMethod,
         Integer orderId,
         String orderReference,
-        CustomerResponse customerResponse
+        CustomerResponse customer
 ) {
 }

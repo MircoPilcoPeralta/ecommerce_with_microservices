@@ -79,8 +79,8 @@ public class OrderServiceImpl implements IOrderService {
                 request.reference(),
                 new CustomerResponse(
                         customer.id(),
-                        customer.firstName(),
-                        customer.lastName(),
+                        customer.firstname(),
+                        customer.lastname(),
                         customer.email()
                 )
         );
