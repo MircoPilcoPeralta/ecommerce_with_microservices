@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/customer")
+@RequestMapping("/api/v1/customers")
 public class CustomerController {
     private final CustomerServiceImpl service;
 
@@ -27,10 +27,12 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createCustomer(
+    public ResponseEntity<CustomerResponse> createCustomer(
             @RequestBody @Valid CreateCustomerRequest request
     ) {
-        return new ResponseEntity(service.createCustomer(request), HttpStatus.CREATED);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(service.createCustomer(request));
     }
 
     @PutMapping
