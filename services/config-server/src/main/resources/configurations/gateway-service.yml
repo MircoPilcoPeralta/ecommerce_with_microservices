@@ -24,6 +24,6 @@ spring:
         - id: payment-service
           uri: lb:http://PAYMENT-SERVICE
           predicates:
-            - Path=/api/v1/payment/**
+            - Path=/api/v1/payments/**
 server:
   port: 8222
